@@ -21,8 +21,8 @@ module.exports = function(environment) {
       // when it is created
 
       // Parse: your app id and restapi id here:
-      applicationId: 'u9i2LYHiaUTar2ogvxBTEZz38YDDK0klmXEMNm57',
-      restApiId: 'yvA2DbIqQol8p4zQZBUUSLA7x5RBhVIeRLQzQOhB'
+      applicationId: 'your-app-id-here',
+      restApiId: 'rest-api-id-here'
     }
   };
 
