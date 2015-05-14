@@ -2,11 +2,30 @@ import Ember from 'ember';
 import Base from 'simple-auth/authenticators/base';
 
 export default Base.extend({
-  restore: function(data) {
-  	return Ember.RSVP.resolve(data);
+
+   restore: function(data) {
+    var adapter, sessionToken, store;
+    if (data == null) {
+      data = {};
+    }
+    store = this.container.lookup('store:main');
+    adapter = store.adapterFor('application');
+    sessionToken = data.sessionToken;
+
+    adapter.set('sessionToken', sessionToken);
+
+    return store.modelFor('parseUser').current(store, data).then(function(user) {
+      adapter.set('sessionToken', user.get('sessionToken'));
+      data = {
+        userId: user.get('id'),
+        sessionToken: user.get('sessionToken')
+      };
+      return data;
+    });
   },
+
   authenticate: function(data) {
-  	var adapter, store, user;
+    var adapter, store, user;
     if (data == null) {
       data = {};
     }
@@ -30,9 +49,13 @@ export default Base.extend({
         return data;
       });
     }
-	//return Ember.RSVP.resolve(credentials);
   },
-  invalidate: function(data) {
-  	return Ember.RSVP.resolve(data);
+  invalidate: function() {
+    var adapter;
+    adapter = this.container.lookup('adapter:application');
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      adapter.set('sessionToken', null);
+      return resolve();
+    });
   }
 });
