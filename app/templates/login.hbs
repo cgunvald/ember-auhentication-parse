@@ -6,18 +6,29 @@
 	      		<div class="field">
 	        		<label>Username</label>
 	        		<div class="ui left icon input">
-	          			{{input type='text' placeholder='Username' value=identification}}
+	          			{{input type='text' placeholder='Username' value=identification classBinding='loginFailed'}}
 	          			<i class="user icon"></i>
 	        		</div>
 	      		</div>
 	      		<div class="field">
 	        		<label>Password</label>
-	        		<div class="ui left icon input">
-	          			{{input type='password' value=password}}
+	        		<div  {{bind-attr class=':ui :left :icon :input'}}>
+	          			{{input type='password' value=password classBinding='loginFailed'}}
 	          			<i class="lock icon"></i>
 	        		</div>
 	      		</div>
 	      		<button type="submit" class="ui blue submit button">Login</button>
+
+				{{#if loginFailed}}
+
+					<div class="ui negative message">
+						<i class="close icon" {{action 'closeMessage' on='click'}}></i>
+						<div class="header">
+						Authentication failed
+						</div>
+						<p>Wrong username and/or password!</p>
+					</div>
+				{{/if}}
 	    	</form>
 		</div>
 		<div class="center aligned eight wide column">

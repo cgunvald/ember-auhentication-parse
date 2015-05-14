@@ -20,3 +20,9 @@ body {
 		margin-left: 10%;
 	}
 }
+
+.login-failed {
+	/*background-color: rgb(252, 201, 201) !important; */
+	background-color: #fff0f0 !important;
+ 	color: #a94442 !important;
+}
